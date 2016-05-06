@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { mapStateToPropsWindow } from '../props';
 import AppBar from 'material-ui/lib/app-bar';
 import Avatar from 'material-ui/lib/avatar';
 import styles from 'material-ui/lib/styles';
@@ -97,5 +96,18 @@ export class Dashboard extends React.Component {
   }
 }
 
-export const DashboardContainer = connect(mapStateToPropsWindow)(Dashboard);
+export function mapStateToProps(state) {
+  return {
+    currentMap: state.currentMap,
+    username: state.currentUser.username,
+    userImage: state.currentUser.image,
+  };
+}
+
+export function mapDispatchToProps(state) {
+  return {
+  };
+}
+
+export const DashboardContainer = connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
