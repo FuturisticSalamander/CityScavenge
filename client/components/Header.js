@@ -1,27 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react';
 
-// You have to write a function that returns an object which
-// tells React-Redux how to map everything in the store to any
-// props refered to in the above component
-// I have abstracted this out into a different file because we
-//   will use the same props for many pages
-import { mapStateToProps } from '../props';
+const Header = () => (
+  <div>
+      <button type="button">Start Game
+      <a href="/auth/google"></a></button>
+      <span className="user-name">Current User: { this.props.username } </span>
+  </div>
+);
 
-// The first of two things that a React-Redux component exports is
-// a standard React component which uses a bunch of props.
-export class Header extends React.Component {
-  render() {
-    return (
-      <div>
-          <button type="button">Start Game
-          <a href='/auth/google'></a></button>
-          <span className="user-name">Current User: { this.props.username } </span>
-      </div>
-    );
-  }
-}
+// Prop validation throws an error if data you receive is invalid
+Header.propTypes = {
+  username: PropTypes.string.isRequired,
+};
 
-// Lastly, we export an object which tells what function to use to map
-// the state to the props
-export const HeaderContainer = connect(mapStateToProps)(Header);
+export default Header;

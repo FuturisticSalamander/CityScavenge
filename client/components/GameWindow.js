@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { mapStateToPropsWindow, mapDispatchToPropsWindow } from '../props';
 import AppBar from 'material-ui/lib/app-bar';
 import LeftNav from 'material-ui/lib/left-nav';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
@@ -61,11 +60,11 @@ export class GameWindow extends React.Component {
         }, {
           enableHighAccuracy: true,
           maximumAge: 30000,
-          timeout: 27000,
+          timeout: 270000,
         });
       },
       error: (error) => {
-        console.log('error', error);
+        console.log('error on /api/geo/gamestart', error);
       },
     });
   }
@@ -89,7 +88,7 @@ export class GameWindow extends React.Component {
         });
       },
       error: (error) => {
-        console.log('error', error);
+        console.log('error on /api/geo/distance', error);
       },
     });
   }
@@ -190,4 +189,17 @@ export class GameWindow extends React.Component {
   }
 }
 
-export const GameWindowContainer = connect(mapStateToPropsWindow, mapDispatchToPropsWindow)(GameWindow);
+export function mapStateToProps(state) {
+  return {
+    currentMap: state.currentMap,
+    username: state.currentUser.username,
+    userImage: state.currentUser.image,
+  };
+}
+
+export function mapDispatchToProps(state) {
+  return {
+  };
+}
+
+export const GameWindowContainer = connect(mapStateToProps, mapDispatchToProps)(GameWindow);
