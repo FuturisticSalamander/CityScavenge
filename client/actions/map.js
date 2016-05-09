@@ -33,8 +33,6 @@ export const startGame = (dispatch) => {
   });
 };
 
-// dispatch(createMap(response.json()));
-
 export const getUserCoords = (lat, lng) => {
   return {
     type: 'GET_USER_COORDS',

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import DashboardLeftNav from '../components/DashboardLeftNav';
-import { toggleNav } from '../actions/index';
+import { toggleNav, logout } from '../actions/index';
 
 const mapStateToProps = (state) => {
   return {
@@ -12,6 +12,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleToggle: () => {
       dispatch(toggleNav());
+      dispatch(logout());
     },
   };
 };
