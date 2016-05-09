@@ -29,7 +29,6 @@ exports.authenticateGoogleLogin = passport.authenticate('google', {
 });
 
 exports.logout = function (req, res, next) {
-  console.log('logout');
   delete req.user;
   req.session.destroy();
   res.redirect('/');
