@@ -20,7 +20,7 @@ module.exports = function (app, express) {
   app.post('/api/login', auth.checkAuth);
 
   app.get('/auth/google', auth.handleGoogleLogin);
-  app.get('/logout', auth.logout);
+  app.get('/api/v1/logout', auth.logout);
   app.get('/auth/google/callback', auth.authenticateGoogleLogin,
     function (req, res) {
       res.redirect('http://localhost:1337/#/dashboard');

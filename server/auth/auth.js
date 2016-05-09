@@ -28,10 +28,10 @@ exports.authenticateGoogleLogin = passport.authenticate('google', {
   failureRedirect: '/',
 });
 
-// TODO implement logout
-exports.logout = function (req, res) {
+exports.logout = function (req, res, next) {
   console.log('logout');
-  req.logout();
+  delete req.user;
+  req.session.destroy();
   res.redirect('/');
 };
 
