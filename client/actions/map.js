@@ -1,15 +1,15 @@
 import 'isomorphic-fetch';
 
-export const createMap = (data) => {
-  console.log('createmap data', data);
+export const createMap = (googleMap, data) => {
   return {
     type: 'CREATE_MAP',
+    googleMap,
     lat: data.latitude,
     lng: data.longitude,
   };
 };
 
-export const startGame = (dispatch) => {
+export const startGame = (dispatch, googleMap) => {
   fetch('api/geo/gamestart', {
     method: 'GET',
     headers: {
@@ -24,16 +24,13 @@ export const startGame = (dispatch) => {
     return response.json();
   })
   .then((data) => {
-    console.log('HOPE THIS IS THE RIGHT DATA', data);
-    dispatch(createMap(data));
+    dispatch(placeFinishPoint(googleMap, data.latitude, data.longitude));
   })
   .catch((error) => {
     console.log('Error', error);
     return;
   });
 };
-
-// dispatch(createMap(response.json()));
 
 export const getUserCoords = (lat, lng) => {
   return {
@@ -46,36 +43,12 @@ export const getUserCoords = (lat, lng) => {
 export const placeUserMarker = (map, title, data) => {
   return {
     type: 'PLACE_USER_MARKER',
-    map: state.mapReducer.map,
+    map,
     title,
     lat: data.latitude,
     lng: data.longitude,
   };
 };
-
-  // updateCoords() {
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/api/geo/distance',
-  //     contentType: 'application/json',
-  //     data: JSON.stringify({
-  //       userLatitude: this.state.userLat,
-  //       userLongitude: this.state.userLng,
-  //       endpointLatitude: this.state.endLat,
-  //       endpointLongitude: this.state.endLng,
-  //     }),
-  //     dataType: 'json',
-  //     success: (data) => {
-  //       // dispatch finish point collision action
-  //       this.setState({
-  //         collision: data,
-  //       });
-  //     },
-  //     error: (error) => {
-  //       console.log('error', error);
-  //     },
-  //   });
-  // }
 
 export const deleteUserMarker = (title) => {
   return {

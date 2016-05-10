@@ -5,9 +5,9 @@
 // this value can be used in tandem with clearPosition() to stop watching the user’s location
 // the return valu
 
-import { placeUserMarker } from '../actions/map';
+import { placeUserMarker, deleteUserMarker, createMap } from '../actions/map';
 
-export const getUserLocationAndWatchID = (dispatch) => {
+export const getUserLocationAndWatchID = (dispatch, googleMap, title) => {
   let currentLocation = {};
 
   let showLocation = (position) => {
@@ -18,7 +18,8 @@ export const getUserLocationAndWatchID = (dispatch) => {
       longitude: position.coords.longitude,
     };
     // TODO: Pass Map as argument
-    dispatch(placeUserMarker('Michael', currentLocation));
+    dispatch(deleteUserMarker(title));
+    dispatch(placeUserMarker(googleMap, title, currentLocation));
     return currentLocation;
   };
 
@@ -42,3 +43,31 @@ export const getUserLocationAndWatchID = (dispatch) => {
 export const stopWatching = (watchID) => {
   navigator.geolocation.clearWatch(watchID);
 };
+
+export const initialPosition = (dispatch, cb) => {
+  let currentLocation;
+
+  let showLocation = (position) => {
+    currentLocation =
+    {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    };
+    cb(currentLocation);
+  };
+
+  const geoError = () => {
+    console.log('Finding geolocation failed.');
+  };
+
+  const geoOptions = {
+    enableHighAccuracy: true,
+    maximumAge: 30000,
+    timeout: 27000,
+  };
+
+  const getWatchID = () => navigator.geolocation.getCurrentPosition(showLocation, geoError, geoOptions);
+
+  const watchID = getWatchID();
+  return { currentLocation, watchID };
+}
